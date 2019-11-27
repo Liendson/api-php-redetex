@@ -116,6 +116,32 @@
 
 	// MÉTODOS DE REQUISIÇÃO POST
 
+	$app->post('/autenticar', function (Request $request, Response $response, array $args) {
+
+		$conexao = getConnection();
+		$dados   = $request->getParsedBody();
+
+		$usuario = $dados["username"];
+		$senha   = $dados["password"];
+
+		$query_sql = "SELECT * FROM tb_usuarios WHERE usuario = ? AND senha = ?";
+
+		$statement = $conexao->prepare($query_sql);
+		$statement->bindValue(1, $usuario);
+		$statement->bindValue(2, $senha);
+		$statement->execute();
+
+		$resultado = $statement->fetchAll();
+
+		$encodeJSON = json_encode($resultado, JSON_PRETTY_PRINT);
+
+		$response->getBody()->write($encodeJSON);
+		$conexao = null;
+		
+		return $response;
+
+	});
+
 	$app->post('/clientes/inserir', function (Request $request, Response $response, array $args) {
 
 		$conexao = getConnection();

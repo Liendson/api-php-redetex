@@ -2,7 +2,7 @@
 
     function getConnection(){
 
-        $URL     = "mysql:host=localhost;dbname=db_redetex;port=3306";
+        $URL     = "mysql:host=localhost;dbname=dbredetex;port=3306";
         $USUARIO = "root";
         $SENHA   = "";
 
